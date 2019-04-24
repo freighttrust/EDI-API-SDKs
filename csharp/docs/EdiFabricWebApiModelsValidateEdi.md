@@ -1,0 +1,10 @@
+# IO.Swagger.Model.EdiFabricWebApiModelsValidateEdi
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Settings** | [**EdiFabricWebApiModelsValidateSettings**](EdiFabricWebApiModelsValidateSettings.md) |  | [optional] 
+**Transactions** | [**List&lt;EdiFabricCoreModelEdiEdiMessage&gt;**](EdiFabricCoreModelEdiEdiMessage.md) |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

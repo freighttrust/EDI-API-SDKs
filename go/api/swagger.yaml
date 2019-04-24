@@ -1,0 +1,3507 @@
+---
+swagger: "2.0"
+info:
+  version: "v1"
+  title: "EdiFabric API"
+paths:
+  /acknowledge/x12:
+    post:
+      tags:
+      - "Acknowledge"
+      operationId: "AcknowledgeX12"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "read_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "read_small"
+        enum:
+        - "read_small"
+        - "read_large"
+        x-exportParamName: "ReadMode"
+        x-optionalDataType: "String"
+      - name: "Accept"
+        in: "header"
+        required: false
+        type: "string"
+        default: "application/json"
+        enum:
+        - "application/json"
+        - "application/xml"
+        x-exportParamName: "Accept"
+        x-optionalDataType: "String"
+      - name: "char_set"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "utf-8"
+        x-exportParamName: "CharSet"
+        x-optionalDataType: "String"
+      - name: "continue_on_error"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: true
+        x-exportParamName: "ContinueOnError"
+        x-optionalDataType: "Bool"
+      - name: "skip_trailer_validation"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "SkipTrailerValidation"
+        x-optionalDataType: "Bool"
+      - name: "syntax_set"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "basic"
+        - "standard"
+        x-exportParamName: "SyntaxSet"
+        x-optionalDataType: "String"
+      - name: "transaction_duplicate"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "TransactionDuplicate"
+        x-optionalDataType: "Bool"
+      - name: "group_duplicate"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "GroupDuplicate"
+        x-optionalDataType: "Bool"
+      - name: "technical_ack"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "default"
+        enum:
+        - "default"
+        - "enforce"
+        - "suppress"
+        x-exportParamName: "TechnicalAck"
+        x-optionalDataType: "String"
+      - name: "generate_for_valid_transactions"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "GenerateForValidTransactions"
+        x-optionalDataType: "Bool"
+      - name: "allow_partial"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "AllowPartial"
+        x-optionalDataType: "Bool"
+      - name: "transaction_control_number"
+        in: "formData"
+        required: false
+        type: "integer"
+        default: 1
+        x-exportParamName: "TransactionControlNumber"
+        x-optionalDataType: "Int32"
+      - name: "ak901"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "e"
+        enum:
+        - "p"
+        - "e"
+        x-exportParamName: "Ak901"
+        x-optionalDataType: "String"
+      - name: "ack_version"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "4010_997"
+        enum:
+        - "4010_997"
+        - "5010_997"
+        - "5010_999"
+        x-exportParamName: "AckVersion"
+        x-optionalDataType: "String"
+      - name: "include_transactions"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "IncludeTransactions"
+        x-optionalDataType: "Bool"
+      - name: "edi_file"
+        in: "formData"
+        description: "EDI file to translate"
+        required: true
+        type: "file"
+        x-exportParamName: "EdiFile"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Web.Api.Models.X12Acknowledgment"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /acknowledge/edifact:
+    post:
+      tags:
+      - "Acknowledge"
+      operationId: "AcknowledgeEdifact"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "read_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "read_small"
+        enum:
+        - "read_small"
+        - "read_large"
+        x-exportParamName: "ReadMode"
+        x-optionalDataType: "String"
+      - name: "Accept"
+        in: "header"
+        required: false
+        type: "string"
+        default: "application/json"
+        enum:
+        - "application/json"
+        - "application/xml"
+        x-exportParamName: "Accept"
+        x-optionalDataType: "String"
+      - name: "char_set"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "utf-8"
+        x-exportParamName: "CharSet"
+        x-optionalDataType: "String"
+      - name: "continue_on_error"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: true
+        x-exportParamName: "ContinueOnError"
+        x-optionalDataType: "Bool"
+      - name: "skip_trailer_validation"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "SkipTrailerValidation"
+        x-optionalDataType: "Bool"
+      - name: "decimal_point"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "."
+        enum:
+        - "."
+        - ","
+        x-exportParamName: "DecimalPoint"
+        x-optionalDataType: "String"
+      - name: "syntax_set"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "unoa"
+        - "unob"
+        x-exportParamName: "SyntaxSet"
+        x-optionalDataType: "String"
+      - name: "transaction_duplicate"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "TransactionDuplicate"
+        x-optionalDataType: "Bool"
+      - name: "group_duplicate"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "GroupDuplicate"
+        x-optionalDataType: "Bool"
+      - name: "technical_ack"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "default"
+        enum:
+        - "default"
+        - "enforce"
+        - "suppress"
+        x-exportParamName: "TechnicalAck"
+        x-optionalDataType: "String"
+      - name: "generate_for_valid_transactions"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "GenerateForValidTransactions"
+        x-optionalDataType: "Bool"
+      - name: "allow_partial"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "AllowPartial"
+        x-optionalDataType: "Bool"
+      - name: "transaction_control_number"
+        in: "formData"
+        required: false
+        type: "integer"
+        default: 1
+        x-exportParamName: "TransactionControlNumber"
+        x-optionalDataType: "Int32"
+      - name: "eancom_syntax"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "4"
+        - "3"
+        - "older"
+        x-exportParamName: "EancomSyntax"
+        x-optionalDataType: "String"
+      - name: "include_transactions"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "IncludeTransactions"
+        x-optionalDataType: "Bool"
+      - name: "edi_file"
+        in: "formData"
+        description: "EDI file to translate"
+        required: true
+        type: "file"
+        x-exportParamName: "EdiFile"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Web.Api.Models.EdifactAcknowledgment"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/x12-transactions:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateX12Transactions"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_x12_transactions"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateX12Transactions"
+        x-exportParamName: "GenerateX12Transactions"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/x12-group:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateX12Group"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_x12_group"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateX12Group"
+        x-exportParamName: "GenerateX12Group"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/x12-interchange:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateX12Interchange"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_x12_interchange"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateX12Interchange"
+        x-exportParamName: "GenerateX12Interchange"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/edifact-transactions:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateEdifactTransactions"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_edifact_transactions"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateEdifactTransactions"
+        x-exportParamName: "GenerateEdifactTransactions"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/edifact-group:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateEdifactGroup"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_edifact_group"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateEdifactGroup"
+        x-exportParamName: "GenerateEdifactGroup"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/edifact-interchange:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateEdifactInterchange"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_edifact_interchange"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateEdifactInterchange"
+        x-exportParamName: "GenerateEdifactInterchange"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/isa:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateIsa"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_isa"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateIsa"
+        x-exportParamName: "GenerateIsa"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/gs:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateGs"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_gs"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateGs"
+        x-exportParamName: "GenerateGs"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/unb:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateUnb"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_unb"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateUnb"
+        x-exportParamName: "GenerateUnb"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /generate/ung:
+    post:
+      tags:
+      - "Generate"
+      operationId: "GenerateUng"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "application/octet-stream"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "generate_ung"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateUng"
+        x-exportParamName: "GenerateUng"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "file"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /translate/x12:
+    post:
+      tags:
+      - "Translate"
+      operationId: "TranslateX12"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "read_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "read_small"
+        enum:
+        - "read_small"
+        - "read_large"
+        x-exportParamName: "ReadMode"
+        x-optionalDataType: "String"
+      - name: "validate"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "Validate"
+        x-optionalDataType: "Bool"
+      - name: "Accept"
+        in: "header"
+        required: false
+        type: "string"
+        default: "application/json"
+        enum:
+        - "application/json"
+        - "application/xml"
+        x-exportParamName: "Accept"
+        x-optionalDataType: "String"
+      - name: "char_set"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "utf-8"
+        x-exportParamName: "CharSet"
+        x-optionalDataType: "String"
+      - name: "continue_on_error"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: true
+        x-exportParamName: "ContinueOnError"
+        x-optionalDataType: "Bool"
+      - name: "transaction_only"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "TransactionOnly"
+        x-optionalDataType: "Bool"
+      - name: "data_element_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "*"
+        x-exportParamName: "DataElementSeparator"
+        x-optionalDataType: "String"
+      - name: "component_data_element_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: ">"
+        x-exportParamName: "ComponentDataElementSeparator"
+        x-optionalDataType: "String"
+      - name: "segment_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "~"
+        x-exportParamName: "SegmentSeparator"
+        x-optionalDataType: "String"
+      - name: "repetition_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "^"
+        x-exportParamName: "RepetitionSeparator"
+        x-optionalDataType: "String"
+      - name: "skip_trailer_validation"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "SkipTrailerValidation"
+        x-optionalDataType: "Bool"
+      - name: "syntax_set"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "basic"
+        - "standard"
+        x-exportParamName: "SyntaxSet"
+        x-optionalDataType: "String"
+      - name: "edi_file"
+        in: "formData"
+        description: "EDI file to translate"
+        required: true
+        type: "file"
+        x-exportParamName: "EdiFile"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Web.Api.Models.X12Interchange"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /translate/edifact:
+    post:
+      tags:
+      - "Translate"
+      operationId: "TranslateEdifact"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "read_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "read_small"
+        enum:
+        - "read_small"
+        - "read_large"
+        x-exportParamName: "ReadMode"
+        x-optionalDataType: "String"
+      - name: "validate"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "Validate"
+        x-optionalDataType: "Bool"
+      - name: "Accept"
+        in: "header"
+        required: false
+        type: "string"
+        default: "application/json"
+        enum:
+        - "application/json"
+        - "application/xml"
+        x-exportParamName: "Accept"
+        x-optionalDataType: "String"
+      - name: "char_set"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "utf-8"
+        x-exportParamName: "CharSet"
+        x-optionalDataType: "String"
+      - name: "continue_on_error"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: true
+        x-exportParamName: "ContinueOnError"
+        x-optionalDataType: "Bool"
+      - name: "transaction_only"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "TransactionOnly"
+        x-optionalDataType: "Bool"
+      - name: "data_element_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "+"
+        x-exportParamName: "DataElementSeparator"
+        x-optionalDataType: "String"
+      - name: "component_data_element_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: ":"
+        x-exportParamName: "ComponentDataElementSeparator"
+        x-optionalDataType: "String"
+      - name: "segment_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "'"
+        x-exportParamName: "SegmentSeparator"
+        x-optionalDataType: "String"
+      - name: "repetition_separator"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "*"
+        x-exportParamName: "RepetitionSeparator"
+        x-optionalDataType: "String"
+      - name: "escape_character"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "?"
+        x-exportParamName: "EscapeCharacter"
+        x-optionalDataType: "String"
+      - name: "decimal_point"
+        in: "formData"
+        required: false
+        type: "string"
+        default: "."
+        enum:
+        - "."
+        - ","
+        x-exportParamName: "DecimalPoint"
+        x-optionalDataType: "String"
+      - name: "eancom_syntax"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "4"
+        - "3"
+        - "older"
+        x-exportParamName: "EancomSyntax"
+        x-optionalDataType: "String"
+      - name: "skip_trailer_validation"
+        in: "formData"
+        required: false
+        type: "boolean"
+        default: false
+        x-exportParamName: "SkipTrailerValidation"
+        x-optionalDataType: "Bool"
+      - name: "syntax_set"
+        in: "formData"
+        required: false
+        type: "string"
+        enum:
+        - "unoa"
+        - "unob"
+        x-exportParamName: "SyntaxSet"
+        x-optionalDataType: "String"
+      - name: "edi_file"
+        in: "formData"
+        description: "EDI file to translate"
+        required: true
+        type: "file"
+        x-exportParamName: "EdiFile"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Web.Api.Models.EdifactInterchange"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /validate/transactions:
+    post:
+      tags:
+      - "Validate"
+      operationId: "ValidateTransactions"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "text/plain"
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "validate_edi"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.ValidateEdi"
+        x-exportParamName: "ValidateEdi"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.MessageErrorContext"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /validate/isa:
+    post:
+      tags:
+      - "Validate"
+      operationId: "ValidateIsa"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "text/plain"
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "isa"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.ISA"
+        x-exportParamName: "Isa"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /validate/gs:
+    post:
+      tags:
+      - "Validate"
+      operationId: "ValidateGs"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "text/plain"
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "gs"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GS"
+        x-exportParamName: "Gs"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /validate/unb:
+    post:
+      tags:
+      - "Validate"
+      operationId: "ValidateUnb"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "text/plain"
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "unb"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNB"
+        x-exportParamName: "Unb"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+  /validate/ung:
+    post:
+      tags:
+      - "Validate"
+      operationId: "ValidateUng"
+      consumes:
+      - "application/json-patch+json"
+      - "application/json"
+      - "text/json"
+      - "application/*+json"
+      - "application/xml"
+      - "text/xml"
+      - "application/*+xml"
+      produces:
+      - "text/plain"
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "ung"
+        required: false
+        schema:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNG"
+        x-exportParamName: "Ung"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext"
+            uniqueItems: false
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/EdiFabric.Web.Api.Models.ErrorDetails"
+definitions:
+  EdiFabric.Web.Api.Models.X12Acknowledgment:
+    type: "object"
+    properties:
+      originalIsa:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.ISA"
+      originalGs:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GS"
+      ackType:
+        type: "string"
+        enum:
+        - "Technical"
+        - "Functional"
+        - "Implementation"
+      ack:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+      originalTransactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+    example:
+      originalIsa:
+        securityInformationQualifier_3: "securityInformationQualifier_3"
+        acknowledgementRequested_14: "acknowledgementRequested_14"
+        authorizationInformation_2: "authorizationInformation_2"
+        securityInformation_4: "securityInformation_4"
+        usageIndicator_15: "usageIndicator_15"
+        interchangeControlStandardsIdentifier_11: "interchangeControlStandardsIdentifier_11"
+        interchangeReceiverID_8: "interchangeReceiverID_8"
+        senderIDQualifier_5: "senderIDQualifier_5"
+        interchangeDate_9: "interchangeDate_9"
+        componentElementSeparator_16: "componentElementSeparator_16"
+        interchangeTime_10: "interchangeTime_10"
+        interchangeSenderID_6: "interchangeSenderID_6"
+        receiverIDQualifier_7: "receiverIDQualifier_7"
+        interchangeControlVersionNumber_12: "interchangeControlVersionNumber_12"
+        authorizationInformationQualifier_1: "authorizationInformationQualifier_1"
+        interchangeControlNumber_13: "interchangeControlNumber_13"
+      ack:
+        errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      originalGs:
+        date_4: "date_4"
+        groupControlNumber_6: "groupControlNumber_6"
+        transactionTypeCode_7: "transactionTypeCode_7"
+        versionAndRelease_8: "versionAndRelease_8"
+        receiverIDCode_3: "receiverIDCode_3"
+        codeIdentifyingInformationType_1: "codeIdentifyingInformationType_1"
+        senderIDCode_2: "senderIDCode_2"
+        time_5: "time_5"
+      ackType: "Technical"
+      originalTransactions:
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+  EdiFabric.Core.Model.Edi.X12.ISA:
+    type: "object"
+    properties:
+      authorizationInformationQualifier_1:
+        type: "string"
+      authorizationInformation_2:
+        type: "string"
+      securityInformationQualifier_3:
+        type: "string"
+      securityInformation_4:
+        type: "string"
+      senderIDQualifier_5:
+        type: "string"
+      interchangeSenderID_6:
+        type: "string"
+      receiverIDQualifier_7:
+        type: "string"
+      interchangeReceiverID_8:
+        type: "string"
+      interchangeDate_9:
+        type: "string"
+      interchangeTime_10:
+        type: "string"
+      interchangeControlStandardsIdentifier_11:
+        type: "string"
+      interchangeControlVersionNumber_12:
+        type: "string"
+      interchangeControlNumber_13:
+        type: "string"
+      acknowledgementRequested_14:
+        type: "string"
+      usageIndicator_15:
+        type: "string"
+      componentElementSeparator_16:
+        type: "string"
+    example:
+      securityInformationQualifier_3: "securityInformationQualifier_3"
+      acknowledgementRequested_14: "acknowledgementRequested_14"
+      authorizationInformation_2: "authorizationInformation_2"
+      securityInformation_4: "securityInformation_4"
+      usageIndicator_15: "usageIndicator_15"
+      interchangeControlStandardsIdentifier_11: "interchangeControlStandardsIdentifier_11"
+      interchangeReceiverID_8: "interchangeReceiverID_8"
+      senderIDQualifier_5: "senderIDQualifier_5"
+      interchangeDate_9: "interchangeDate_9"
+      componentElementSeparator_16: "componentElementSeparator_16"
+      interchangeTime_10: "interchangeTime_10"
+      interchangeSenderID_6: "interchangeSenderID_6"
+      receiverIDQualifier_7: "receiverIDQualifier_7"
+      interchangeControlVersionNumber_12: "interchangeControlVersionNumber_12"
+      authorizationInformationQualifier_1: "authorizationInformationQualifier_1"
+      interchangeControlNumber_13: "interchangeControlNumber_13"
+  EdiFabric.Core.Model.Edi.X12.GS:
+    type: "object"
+    properties:
+      codeIdentifyingInformationType_1:
+        type: "string"
+      senderIDCode_2:
+        type: "string"
+      receiverIDCode_3:
+        type: "string"
+      date_4:
+        type: "string"
+      time_5:
+        type: "string"
+      groupControlNumber_6:
+        type: "string"
+      transactionTypeCode_7:
+        type: "string"
+      versionAndRelease_8:
+        type: "string"
+    example:
+      date_4: "date_4"
+      groupControlNumber_6: "groupControlNumber_6"
+      transactionTypeCode_7: "transactionTypeCode_7"
+      versionAndRelease_8: "versionAndRelease_8"
+      receiverIDCode_3: "receiverIDCode_3"
+      codeIdentifyingInformationType_1: "codeIdentifyingInformationType_1"
+      senderIDCode_2: "senderIDCode_2"
+      time_5: "time_5"
+  EdiFabric.Core.Model.Edi.EdiMessage:
+    type: "object"
+    properties:
+      errorContext:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.MessageErrorContext"
+    example:
+      errorContext:
+        codes:
+        - "TransactionSetNotSupported"
+        - "TransactionSetNotSupported"
+        hasErrors: true
+        name: "name"
+        message: "message"
+        version: "version"
+        controlNumber: "controlNumber"
+        errors:
+        - codes:
+          - "UnrecognizedSegment"
+          - "UnrecognizedSegment"
+          name: "name"
+          position: 0
+          message: "message"
+          value: "value"
+          errors:
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+        - codes:
+          - "UnrecognizedSegment"
+          - "UnrecognizedSegment"
+          name: "name"
+          position: 0
+          message: "message"
+          value: "value"
+          errors:
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+  EdiFabric.Core.Model.Edi.ErrorContexts.MessageErrorContext:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      controlNumber:
+        type: "string"
+      version:
+        type: "string"
+      codes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "TransactionSetNotSupported"
+          - "MessageTrailerMissing"
+          - "ControlNumberNotMatching"
+          - "SegmentsCountNotMatching"
+          - "MessageWithErrors"
+          - "MissingOrInvalidTransactionSet"
+          - "MissingOrInvalidControlNumber"
+          - "DuplicateMessageControlNumber"
+          - "FunctionalGroupVersionNotSupported"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext"
+      hasErrors:
+        type: "boolean"
+      message:
+        type: "string"
+    example:
+      codes:
+      - "TransactionSetNotSupported"
+      - "TransactionSetNotSupported"
+      hasErrors: true
+      name: "name"
+      message: "message"
+      version: "version"
+      controlNumber: "controlNumber"
+      errors:
+      - codes:
+        - "UnrecognizedSegment"
+        - "UnrecognizedSegment"
+        name: "name"
+        position: 0
+        message: "message"
+        value: "value"
+        errors:
+        - code: "RequiredDataElementMissing"
+          componentPosition: 1
+          name: "name"
+          repetitionPosition: 5
+          position: 6
+          message: "message"
+          value: "value"
+        - code: "RequiredDataElementMissing"
+          componentPosition: 1
+          name: "name"
+          repetitionPosition: 5
+          position: 6
+          message: "message"
+          value: "value"
+      - codes:
+        - "UnrecognizedSegment"
+        - "UnrecognizedSegment"
+        name: "name"
+        position: 0
+        message: "message"
+        value: "value"
+        errors:
+        - code: "RequiredDataElementMissing"
+          componentPosition: 1
+          name: "name"
+          repetitionPosition: 5
+          position: 6
+          message: "message"
+          value: "value"
+        - code: "RequiredDataElementMissing"
+          componentPosition: 1
+          name: "name"
+          repetitionPosition: 5
+          position: 6
+          message: "message"
+          value: "value"
+  EdiFabric.Core.Model.Edi.ErrorContexts.SegmentErrorContext:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      position:
+        type: "integer"
+        format: "int32"
+      value:
+        type: "string"
+      codes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "UnrecognizedSegment"
+          - "RequiredSegmentMissing"
+          - "LoopExceedsMaximumUse"
+          - "SegmentExceedsMaximumUse"
+          - "SegmentNotInProperSequence"
+          - "LoopBelowMinimumUse"
+          - "SegmentBelowMinimumUse"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.DataElementErrorContext"
+      message:
+        type: "string"
+    example:
+      codes:
+      - "UnrecognizedSegment"
+      - "UnrecognizedSegment"
+      name: "name"
+      position: 0
+      message: "message"
+      value: "value"
+      errors:
+      - code: "RequiredDataElementMissing"
+        componentPosition: 1
+        name: "name"
+        repetitionPosition: 5
+        position: 6
+        message: "message"
+        value: "value"
+      - code: "RequiredDataElementMissing"
+        componentPosition: 1
+        name: "name"
+        repetitionPosition: 5
+        position: 6
+        message: "message"
+        value: "value"
+  EdiFabric.Core.Model.Edi.ErrorContexts.DataElementErrorContext:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      position:
+        type: "integer"
+        format: "int32"
+      code:
+        type: "string"
+        enum:
+        - "RequiredDataElementMissing"
+        - "ConditionalRequiredDataElementMissing"
+        - "TooManyDataElements"
+        - "DataElementTooShort"
+        - "DataElementTooLong"
+        - "InvalidCharacterInDataElement"
+        - "InvalidCodeValue"
+        - "InvalidDate"
+        - "InvalidTime"
+        - "ExclusionConditionViolated"
+        - "TooManyRepetitions"
+        - "TooManyComponents"
+        - "TooFewRepetitions"
+      value:
+        type: "string"
+      componentPosition:
+        type: "integer"
+        format: "int32"
+      repetitionPosition:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+    example:
+      code: "RequiredDataElementMissing"
+      componentPosition: 1
+      name: "name"
+      repetitionPosition: 5
+      position: 6
+      message: "message"
+      value: "value"
+  EdiFabric.Web.Api.Models.ErrorDetails:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      details:
+        type: "array"
+        items:
+          type: "string"
+  EdiFabric.Web.Api.Models.EdifactAcknowledgment:
+    type: "object"
+    properties:
+      originalUnb:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNB"
+      originalUng:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNG"
+      ackType:
+        type: "string"
+        enum:
+        - "Technical"
+        - "Functional"
+        - "Implementation"
+      ack:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+      originalTransactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+    example:
+      originalUng:
+        controllingAgency_6: "controllingAgency_6"
+        applicationrecipientidentificatioN_3:
+          applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        groupReferenceNumber_5: "groupReferenceNumber_5"
+        dateandtimeofpreparatioN_4:
+          date_1: "date_1"
+          time_2: "time_2"
+        applicationsenderidentificatioN_2:
+          applicationSenderIdentification_1: "applicationSenderIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        messageGroupIdentification_1: "messageGroupIdentification_1"
+        d_ApplicationPassword_8: "d_ApplicationPassword_8"
+        messageversioN_7:
+          messageVersionNumber_1: "messageVersionNumber_1"
+          associationAssignedCode_3: "associationAssignedCode_3"
+          messageReleaseNumber_2: "messageReleaseNumber_2"
+      ack:
+        errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      ackType: "Technical"
+      originalTransactions:
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      originalUnb:
+        interchangeControlReference_5: "interchangeControlReference_5"
+        interchangerecipienT_3:
+          interchangeRecipientInternalSubIdentification_4: "interchangeRecipientInternalSubIdentification_4"
+          interchangeRecipientInternalIdentification_3: "interchangeRecipientInternalIdentification_3"
+          interchangeRecipientIdentification_1: "interchangeRecipientIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        dateandtimeofpreparatioN_4:
+          date_1: "date_1"
+          time_2: "time_2"
+        interchangesendeR_2:
+          interchangeSenderIdentification_1: "interchangeSenderIdentification_1"
+          interchangeSenderInternalIdentification_3: "interchangeSenderInternalIdentification_3"
+          interchangeSenderInternalSubIdentification_4: "interchangeSenderInternalSubIdentification_4"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        recipientsreferencepassworddetailS_6:
+          recipientReferencePassword_1: "recipientReferencePassword_1"
+          recipientReferencePasswordQualifier_2: "recipientReferencePasswordQualifier_2"
+        syntaxidentifieR_1:
+          serviceCodeListDirectoryVersionNumber_3: "serviceCodeListDirectoryVersionNumber_3"
+          syntaxVersionNumber_2: "syntaxVersionNumber_2"
+          syntaxIdentifier_1: "syntaxIdentifier_1"
+          characterEncoding_4: "characterEncoding_4"
+        processingPriorityCode_8: "processingPriorityCode_8"
+        acknowledgementRequest_9: "acknowledgementRequest_9"
+        interchangeAgreementIdentifier_10: "interchangeAgreementIdentifier_10"
+        applicationReference_7: "applicationReference_7"
+        testIndicator_11: "testIndicator_11"
+  EdiFabric.Core.Model.Edi.Edifact.UNB:
+    type: "object"
+    properties:
+      syntaxidentifieR_1:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S001"
+      interchangesendeR_2:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S002"
+      interchangerecipienT_3:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S003"
+      dateandtimeofpreparatioN_4:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S004"
+      interchangeControlReference_5:
+        type: "string"
+      recipientsreferencepassworddetailS_6:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S005"
+      applicationReference_7:
+        type: "string"
+      processingPriorityCode_8:
+        type: "string"
+      acknowledgementRequest_9:
+        type: "string"
+      interchangeAgreementIdentifier_10:
+        type: "string"
+      testIndicator_11:
+        type: "string"
+    example:
+      interchangeControlReference_5: "interchangeControlReference_5"
+      interchangerecipienT_3:
+        interchangeRecipientInternalSubIdentification_4: "interchangeRecipientInternalSubIdentification_4"
+        interchangeRecipientInternalIdentification_3: "interchangeRecipientInternalIdentification_3"
+        interchangeRecipientIdentification_1: "interchangeRecipientIdentification_1"
+        identificationCodeQualifier_2: "identificationCodeQualifier_2"
+      dateandtimeofpreparatioN_4:
+        date_1: "date_1"
+        time_2: "time_2"
+      interchangesendeR_2:
+        interchangeSenderIdentification_1: "interchangeSenderIdentification_1"
+        interchangeSenderInternalIdentification_3: "interchangeSenderInternalIdentification_3"
+        interchangeSenderInternalSubIdentification_4: "interchangeSenderInternalSubIdentification_4"
+        identificationCodeQualifier_2: "identificationCodeQualifier_2"
+      recipientsreferencepassworddetailS_6:
+        recipientReferencePassword_1: "recipientReferencePassword_1"
+        recipientReferencePasswordQualifier_2: "recipientReferencePasswordQualifier_2"
+      syntaxidentifieR_1:
+        serviceCodeListDirectoryVersionNumber_3: "serviceCodeListDirectoryVersionNumber_3"
+        syntaxVersionNumber_2: "syntaxVersionNumber_2"
+        syntaxIdentifier_1: "syntaxIdentifier_1"
+        characterEncoding_4: "characterEncoding_4"
+      processingPriorityCode_8: "processingPriorityCode_8"
+      acknowledgementRequest_9: "acknowledgementRequest_9"
+      interchangeAgreementIdentifier_10: "interchangeAgreementIdentifier_10"
+      applicationReference_7: "applicationReference_7"
+      testIndicator_11: "testIndicator_11"
+  EdiFabric.Core.Model.Edi.Edifact.UNG:
+    type: "object"
+    properties:
+      messageGroupIdentification_1:
+        type: "string"
+      applicationsenderidentificatioN_2:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S006"
+      applicationrecipientidentificatioN_3:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S007"
+      dateandtimeofpreparatioN_4:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S004"
+      groupReferenceNumber_5:
+        type: "string"
+      controllingAgency_6:
+        type: "string"
+      messageversioN_7:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.S008"
+      d_ApplicationPassword_8:
+        type: "string"
+    example:
+      controllingAgency_6: "controllingAgency_6"
+      applicationrecipientidentificatioN_3:
+        applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+        identificationCodeQualifier_2: "identificationCodeQualifier_2"
+      groupReferenceNumber_5: "groupReferenceNumber_5"
+      dateandtimeofpreparatioN_4:
+        date_1: "date_1"
+        time_2: "time_2"
+      applicationsenderidentificatioN_2:
+        applicationSenderIdentification_1: "applicationSenderIdentification_1"
+        identificationCodeQualifier_2: "identificationCodeQualifier_2"
+      messageGroupIdentification_1: "messageGroupIdentification_1"
+      d_ApplicationPassword_8: "d_ApplicationPassword_8"
+      messageversioN_7:
+        messageVersionNumber_1: "messageVersionNumber_1"
+        associationAssignedCode_3: "associationAssignedCode_3"
+        messageReleaseNumber_2: "messageReleaseNumber_2"
+  EdiFabric.Core.Model.Edi.Edifact.S001:
+    type: "object"
+    properties:
+      syntaxIdentifier_1:
+        type: "string"
+      syntaxVersionNumber_2:
+        type: "string"
+      serviceCodeListDirectoryVersionNumber_3:
+        type: "string"
+      characterEncoding_4:
+        type: "string"
+    example:
+      serviceCodeListDirectoryVersionNumber_3: "serviceCodeListDirectoryVersionNumber_3"
+      syntaxVersionNumber_2: "syntaxVersionNumber_2"
+      syntaxIdentifier_1: "syntaxIdentifier_1"
+      characterEncoding_4: "characterEncoding_4"
+  EdiFabric.Core.Model.Edi.Edifact.S002:
+    type: "object"
+    properties:
+      interchangeSenderIdentification_1:
+        type: "string"
+      identificationCodeQualifier_2:
+        type: "string"
+      interchangeSenderInternalIdentification_3:
+        type: "string"
+      interchangeSenderInternalSubIdentification_4:
+        type: "string"
+    example:
+      interchangeSenderIdentification_1: "interchangeSenderIdentification_1"
+      interchangeSenderInternalIdentification_3: "interchangeSenderInternalIdentification_3"
+      interchangeSenderInternalSubIdentification_4: "interchangeSenderInternalSubIdentification_4"
+      identificationCodeQualifier_2: "identificationCodeQualifier_2"
+  EdiFabric.Core.Model.Edi.Edifact.S003:
+    type: "object"
+    properties:
+      interchangeRecipientIdentification_1:
+        type: "string"
+      identificationCodeQualifier_2:
+        type: "string"
+      interchangeRecipientInternalIdentification_3:
+        type: "string"
+      interchangeRecipientInternalSubIdentification_4:
+        type: "string"
+    example:
+      interchangeRecipientInternalSubIdentification_4: "interchangeRecipientInternalSubIdentification_4"
+      interchangeRecipientInternalIdentification_3: "interchangeRecipientInternalIdentification_3"
+      interchangeRecipientIdentification_1: "interchangeRecipientIdentification_1"
+      identificationCodeQualifier_2: "identificationCodeQualifier_2"
+  EdiFabric.Core.Model.Edi.Edifact.S004:
+    type: "object"
+    properties:
+      date_1:
+        type: "string"
+      time_2:
+        type: "string"
+    example:
+      date_1: "date_1"
+      time_2: "time_2"
+  EdiFabric.Core.Model.Edi.Edifact.S005:
+    type: "object"
+    properties:
+      recipientReferencePassword_1:
+        type: "string"
+      recipientReferencePasswordQualifier_2:
+        type: "string"
+    example:
+      recipientReferencePassword_1: "recipientReferencePassword_1"
+      recipientReferencePasswordQualifier_2: "recipientReferencePasswordQualifier_2"
+  EdiFabric.Core.Model.Edi.Edifact.S006:
+    type: "object"
+    properties:
+      applicationSenderIdentification_1:
+        type: "string"
+      identificationCodeQualifier_2:
+        type: "string"
+    example:
+      applicationSenderIdentification_1: "applicationSenderIdentification_1"
+      identificationCodeQualifier_2: "identificationCodeQualifier_2"
+  EdiFabric.Core.Model.Edi.Edifact.S007:
+    type: "object"
+    properties:
+      applicationRecipientIdentification_1:
+        type: "string"
+      identificationCodeQualifier_2:
+        type: "string"
+    example:
+      applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+      identificationCodeQualifier_2: "identificationCodeQualifier_2"
+  EdiFabric.Core.Model.Edi.Edifact.S008:
+    type: "object"
+    properties:
+      messageVersionNumber_1:
+        type: "string"
+      messageReleaseNumber_2:
+        type: "string"
+      associationAssignedCode_3:
+        type: "string"
+    example:
+      messageVersionNumber_1: "messageVersionNumber_1"
+      associationAssignedCode_3: "associationAssignedCode_3"
+      messageReleaseNumber_2: "messageReleaseNumber_2"
+  EdiFabric.Web.Api.Models.GenerateX12Transactions:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+  EdiFabric.Web.Api.Models.GenerateSettings:
+    type: "object"
+    properties:
+      preserve_whitespace:
+        type: "boolean"
+      auto_trailers:
+        type: "boolean"
+      post_fix:
+        type: "string"
+      segment_separator:
+        type: "string"
+      component_data_element_separator:
+        type: "string"
+      escape_character:
+        type: "string"
+      data_element_separator:
+        type: "string"
+      repetition_separator:
+        type: "string"
+      decimal_point:
+        type: "string"
+      syntax_set:
+        type: "string"
+      char_set:
+        type: "string"
+  EdiFabric.Web.Api.Models.GenerateX12Group:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      gs:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GS"
+      geTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GE"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+  EdiFabric.Core.Model.Edi.X12.GE:
+    type: "object"
+    properties:
+      numberOfIncludedSets_1:
+        type: "string"
+      groupControlNumber_2:
+        type: "string"
+    example:
+      groupControlNumber_2: "groupControlNumber_2"
+      numberOfIncludedSets_1: "numberOfIncludedSets_1"
+  EdiFabric.Web.Api.Models.GenerateX12Interchange:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      isa:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.ISA"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.X12Group"
+      ieaTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.IEA"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.ReaderErrorContext"
+  EdiFabric.Web.Api.Models.X12Group:
+    type: "object"
+    properties:
+      gs:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GS"
+      geTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GE"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+    example:
+      geTrailers:
+      - groupControlNumber_2: "groupControlNumber_2"
+        numberOfIncludedSets_1: "numberOfIncludedSets_1"
+      - groupControlNumber_2: "groupControlNumber_2"
+        numberOfIncludedSets_1: "numberOfIncludedSets_1"
+      gs:
+        date_4: "date_4"
+        groupControlNumber_6: "groupControlNumber_6"
+        transactionTypeCode_7: "transactionTypeCode_7"
+        versionAndRelease_8: "versionAndRelease_8"
+        receiverIDCode_3: "receiverIDCode_3"
+        codeIdentifyingInformationType_1: "codeIdentifyingInformationType_1"
+        senderIDCode_2: "senderIDCode_2"
+        time_5: "time_5"
+      transactions:
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+  EdiFabric.Core.Model.Edi.X12.IEA:
+    type: "object"
+    properties:
+      numberOfIncludedGroups_1:
+        type: "string"
+      interchangeControlNumber_2:
+        type: "string"
+    example:
+      numberOfIncludedGroups_1: "numberOfIncludedGroups_1"
+      interchangeControlNumber_2: "interchangeControlNumber_2"
+  EdiFabric.Core.Model.Edi.ErrorContexts.ReaderErrorContext:
+    type: "object"
+    properties:
+      readerErrorCode:
+        type: "string"
+        enum:
+        - "Unknown"
+        - "InvalidSpecOrAssembly"
+        - "InvalidControlStructure"
+        - "ImproperEndOfFile"
+        - "InvalidInterchangeContent"
+        - "DemoVersion"
+      messageErrorContext:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.MessageErrorContext"
+      message:
+        type: "string"
+    example:
+      messageErrorContext:
+        codes:
+        - "TransactionSetNotSupported"
+        - "TransactionSetNotSupported"
+        hasErrors: true
+        name: "name"
+        message: "message"
+        version: "version"
+        controlNumber: "controlNumber"
+        errors:
+        - codes:
+          - "UnrecognizedSegment"
+          - "UnrecognizedSegment"
+          name: "name"
+          position: 0
+          message: "message"
+          value: "value"
+          errors:
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+        - codes:
+          - "UnrecognizedSegment"
+          - "UnrecognizedSegment"
+          name: "name"
+          position: 0
+          message: "message"
+          value: "value"
+          errors:
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+          - code: "RequiredDataElementMissing"
+            componentPosition: 1
+            name: "name"
+            repetitionPosition: 5
+            position: 6
+            message: "message"
+            value: "value"
+      message: "message"
+      readerErrorCode: "Unknown"
+  EdiFabric.Web.Api.Models.GenerateEdifactTransactions:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+  EdiFabric.Web.Api.Models.GenerateEdifactGroup:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      ung:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNG"
+      uneTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNE"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+  EdiFabric.Core.Model.Edi.Edifact.UNE:
+    type: "object"
+    properties:
+      groupControlCount_1:
+        type: "string"
+      groupReferenceNumber_2:
+        type: "string"
+    example:
+      groupControlCount_1: "groupControlCount_1"
+      groupReferenceNumber_2: "groupReferenceNumber_2"
+  EdiFabric.Web.Api.Models.GenerateEdifactInterchange:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      unb:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNB"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.EdifactGroup"
+      unzTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNZ"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.ReaderErrorContext"
+  EdiFabric.Web.Api.Models.EdifactGroup:
+    type: "object"
+    properties:
+      ung:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNG"
+      uneTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNE"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+    example:
+      uneTrailers:
+      - groupControlCount_1: "groupControlCount_1"
+        groupReferenceNumber_2: "groupReferenceNumber_2"
+      - groupControlCount_1: "groupControlCount_1"
+        groupReferenceNumber_2: "groupReferenceNumber_2"
+      transactions:
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      - errorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+      ung:
+        controllingAgency_6: "controllingAgency_6"
+        applicationrecipientidentificatioN_3:
+          applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        groupReferenceNumber_5: "groupReferenceNumber_5"
+        dateandtimeofpreparatioN_4:
+          date_1: "date_1"
+          time_2: "time_2"
+        applicationsenderidentificatioN_2:
+          applicationSenderIdentification_1: "applicationSenderIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        messageGroupIdentification_1: "messageGroupIdentification_1"
+        d_ApplicationPassword_8: "d_ApplicationPassword_8"
+        messageversioN_7:
+          messageVersionNumber_1: "messageVersionNumber_1"
+          associationAssignedCode_3: "associationAssignedCode_3"
+          messageReleaseNumber_2: "messageReleaseNumber_2"
+  EdiFabric.Core.Model.Edi.Edifact.UNZ:
+    type: "object"
+    properties:
+      interchangeControlCount_1:
+        type: "string"
+      interchangeControlReference_2:
+        type: "string"
+    example:
+      interchangeControlCount_1: "interchangeControlCount_1"
+      interchangeControlReference_2: "interchangeControlReference_2"
+  EdiFabric.Web.Api.Models.GenerateIsa:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      isa:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.ISA"
+  EdiFabric.Web.Api.Models.GenerateGs:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      gs:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.GS"
+  EdiFabric.Web.Api.Models.GenerateUnb:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      unb:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNB"
+  EdiFabric.Web.Api.Models.GenerateUng:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.GenerateSettings"
+      ung:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNG"
+  EdiFabric.Web.Api.Models.X12Interchange:
+    type: "object"
+    properties:
+      isa:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.ISA"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.X12Group"
+      ieaTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.X12.IEA"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.ReaderErrorContext"
+    example:
+      isa:
+        securityInformationQualifier_3: "securityInformationQualifier_3"
+        acknowledgementRequested_14: "acknowledgementRequested_14"
+        authorizationInformation_2: "authorizationInformation_2"
+        securityInformation_4: "securityInformation_4"
+        usageIndicator_15: "usageIndicator_15"
+        interchangeControlStandardsIdentifier_11: "interchangeControlStandardsIdentifier_11"
+        interchangeReceiverID_8: "interchangeReceiverID_8"
+        senderIDQualifier_5: "senderIDQualifier_5"
+        interchangeDate_9: "interchangeDate_9"
+        componentElementSeparator_16: "componentElementSeparator_16"
+        interchangeTime_10: "interchangeTime_10"
+        interchangeSenderID_6: "interchangeSenderID_6"
+        receiverIDQualifier_7: "receiverIDQualifier_7"
+        interchangeControlVersionNumber_12: "interchangeControlVersionNumber_12"
+        authorizationInformationQualifier_1: "authorizationInformationQualifier_1"
+        interchangeControlNumber_13: "interchangeControlNumber_13"
+      groups:
+      - geTrailers:
+        - groupControlNumber_2: "groupControlNumber_2"
+          numberOfIncludedSets_1: "numberOfIncludedSets_1"
+        - groupControlNumber_2: "groupControlNumber_2"
+          numberOfIncludedSets_1: "numberOfIncludedSets_1"
+        gs:
+          date_4: "date_4"
+          groupControlNumber_6: "groupControlNumber_6"
+          transactionTypeCode_7: "transactionTypeCode_7"
+          versionAndRelease_8: "versionAndRelease_8"
+          receiverIDCode_3: "receiverIDCode_3"
+          codeIdentifyingInformationType_1: "codeIdentifyingInformationType_1"
+          senderIDCode_2: "senderIDCode_2"
+          time_5: "time_5"
+        transactions:
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+      - geTrailers:
+        - groupControlNumber_2: "groupControlNumber_2"
+          numberOfIncludedSets_1: "numberOfIncludedSets_1"
+        - groupControlNumber_2: "groupControlNumber_2"
+          numberOfIncludedSets_1: "numberOfIncludedSets_1"
+        gs:
+          date_4: "date_4"
+          groupControlNumber_6: "groupControlNumber_6"
+          transactionTypeCode_7: "transactionTypeCode_7"
+          versionAndRelease_8: "versionAndRelease_8"
+          receiverIDCode_3: "receiverIDCode_3"
+          codeIdentifyingInformationType_1: "codeIdentifyingInformationType_1"
+          senderIDCode_2: "senderIDCode_2"
+          time_5: "time_5"
+        transactions:
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+      ieaTrailers:
+      - numberOfIncludedGroups_1: "numberOfIncludedGroups_1"
+        interchangeControlNumber_2: "interchangeControlNumber_2"
+      - numberOfIncludedGroups_1: "numberOfIncludedGroups_1"
+        interchangeControlNumber_2: "interchangeControlNumber_2"
+      errors:
+      - messageErrorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+        message: "message"
+        readerErrorCode: "Unknown"
+      - messageErrorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+        message: "message"
+        readerErrorCode: "Unknown"
+  EdiFabric.Web.Api.Models.EdifactInterchange:
+    type: "object"
+    properties:
+      unb:
+        $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNB"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Web.Api.Models.EdifactGroup"
+      unzTrailers:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.Edifact.UNZ"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.ErrorContexts.ReaderErrorContext"
+    example:
+      unb:
+        interchangeControlReference_5: "interchangeControlReference_5"
+        interchangerecipienT_3:
+          interchangeRecipientInternalSubIdentification_4: "interchangeRecipientInternalSubIdentification_4"
+          interchangeRecipientInternalIdentification_3: "interchangeRecipientInternalIdentification_3"
+          interchangeRecipientIdentification_1: "interchangeRecipientIdentification_1"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        dateandtimeofpreparatioN_4:
+          date_1: "date_1"
+          time_2: "time_2"
+        interchangesendeR_2:
+          interchangeSenderIdentification_1: "interchangeSenderIdentification_1"
+          interchangeSenderInternalIdentification_3: "interchangeSenderInternalIdentification_3"
+          interchangeSenderInternalSubIdentification_4: "interchangeSenderInternalSubIdentification_4"
+          identificationCodeQualifier_2: "identificationCodeQualifier_2"
+        recipientsreferencepassworddetailS_6:
+          recipientReferencePassword_1: "recipientReferencePassword_1"
+          recipientReferencePasswordQualifier_2: "recipientReferencePasswordQualifier_2"
+        syntaxidentifieR_1:
+          serviceCodeListDirectoryVersionNumber_3: "serviceCodeListDirectoryVersionNumber_3"
+          syntaxVersionNumber_2: "syntaxVersionNumber_2"
+          syntaxIdentifier_1: "syntaxIdentifier_1"
+          characterEncoding_4: "characterEncoding_4"
+        processingPriorityCode_8: "processingPriorityCode_8"
+        acknowledgementRequest_9: "acknowledgementRequest_9"
+        interchangeAgreementIdentifier_10: "interchangeAgreementIdentifier_10"
+        applicationReference_7: "applicationReference_7"
+        testIndicator_11: "testIndicator_11"
+      groups:
+      - uneTrailers:
+        - groupControlCount_1: "groupControlCount_1"
+          groupReferenceNumber_2: "groupReferenceNumber_2"
+        - groupControlCount_1: "groupControlCount_1"
+          groupReferenceNumber_2: "groupReferenceNumber_2"
+        transactions:
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        ung:
+          controllingAgency_6: "controllingAgency_6"
+          applicationrecipientidentificatioN_3:
+            applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+            identificationCodeQualifier_2: "identificationCodeQualifier_2"
+          groupReferenceNumber_5: "groupReferenceNumber_5"
+          dateandtimeofpreparatioN_4:
+            date_1: "date_1"
+            time_2: "time_2"
+          applicationsenderidentificatioN_2:
+            applicationSenderIdentification_1: "applicationSenderIdentification_1"
+            identificationCodeQualifier_2: "identificationCodeQualifier_2"
+          messageGroupIdentification_1: "messageGroupIdentification_1"
+          d_ApplicationPassword_8: "d_ApplicationPassword_8"
+          messageversioN_7:
+            messageVersionNumber_1: "messageVersionNumber_1"
+            associationAssignedCode_3: "associationAssignedCode_3"
+            messageReleaseNumber_2: "messageReleaseNumber_2"
+      - uneTrailers:
+        - groupControlCount_1: "groupControlCount_1"
+          groupReferenceNumber_2: "groupReferenceNumber_2"
+        - groupControlCount_1: "groupControlCount_1"
+          groupReferenceNumber_2: "groupReferenceNumber_2"
+        transactions:
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        - errorContext:
+            codes:
+            - "TransactionSetNotSupported"
+            - "TransactionSetNotSupported"
+            hasErrors: true
+            name: "name"
+            message: "message"
+            version: "version"
+            controlNumber: "controlNumber"
+            errors:
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+            - codes:
+              - "UnrecognizedSegment"
+              - "UnrecognizedSegment"
+              name: "name"
+              position: 0
+              message: "message"
+              value: "value"
+              errors:
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+              - code: "RequiredDataElementMissing"
+                componentPosition: 1
+                name: "name"
+                repetitionPosition: 5
+                position: 6
+                message: "message"
+                value: "value"
+        ung:
+          controllingAgency_6: "controllingAgency_6"
+          applicationrecipientidentificatioN_3:
+            applicationRecipientIdentification_1: "applicationRecipientIdentification_1"
+            identificationCodeQualifier_2: "identificationCodeQualifier_2"
+          groupReferenceNumber_5: "groupReferenceNumber_5"
+          dateandtimeofpreparatioN_4:
+            date_1: "date_1"
+            time_2: "time_2"
+          applicationsenderidentificatioN_2:
+            applicationSenderIdentification_1: "applicationSenderIdentification_1"
+            identificationCodeQualifier_2: "identificationCodeQualifier_2"
+          messageGroupIdentification_1: "messageGroupIdentification_1"
+          d_ApplicationPassword_8: "d_ApplicationPassword_8"
+          messageversioN_7:
+            messageVersionNumber_1: "messageVersionNumber_1"
+            associationAssignedCode_3: "associationAssignedCode_3"
+            messageReleaseNumber_2: "messageReleaseNumber_2"
+      unzTrailers:
+      - interchangeControlCount_1: "interchangeControlCount_1"
+        interchangeControlReference_2: "interchangeControlReference_2"
+      - interchangeControlCount_1: "interchangeControlCount_1"
+        interchangeControlReference_2: "interchangeControlReference_2"
+      errors:
+      - messageErrorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+        message: "message"
+        readerErrorCode: "Unknown"
+      - messageErrorContext:
+          codes:
+          - "TransactionSetNotSupported"
+          - "TransactionSetNotSupported"
+          hasErrors: true
+          name: "name"
+          message: "message"
+          version: "version"
+          controlNumber: "controlNumber"
+          errors:
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+          - codes:
+            - "UnrecognizedSegment"
+            - "UnrecognizedSegment"
+            name: "name"
+            position: 0
+            message: "message"
+            value: "value"
+            errors:
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+            - code: "RequiredDataElementMissing"
+              componentPosition: 1
+              name: "name"
+              repetitionPosition: 5
+              position: 6
+              message: "message"
+              value: "value"
+        message: "message"
+        readerErrorCode: "Unknown"
+  EdiFabric.Web.Api.Models.ValidateEdi:
+    type: "object"
+    properties:
+      settings:
+        $ref: "#/definitions/EdiFabric.Web.Api.Models.ValidateSettings"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/EdiFabric.Core.Model.Edi.EdiMessage"
+  EdiFabric.Web.Api.Models.ValidateSettings:
+    type: "object"
+    properties:
+      syntax_set:
+        type: "string"
+      decimal_point:
+        type: "string"
+      skip_trailer_validation:
+        type: "boolean"
